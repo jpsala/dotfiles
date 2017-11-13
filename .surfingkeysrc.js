@@ -10,7 +10,7 @@ unmap('G');
 vunmap('G');
 mapkey('GG', '#2Scroll to the bottom of the page', 'Normal.scroll("bottom")', {repeatIgnore: true});
 
-addSearchAliasX('c', 'criticker', 'https://www.criticker.com/', 's', 'https://www.criticker.com/ajax/critickerAc.php?type=films&term=', function(response) {
+addSearchAliasX('c', 'criticker', 'https://www.criticker.com/?type=films&search=', 's', 'https://www.criticker.com/ajax/critickerAc.php?type=films&term=', function(response) {
   console.log('criticker...', response);
   var res = JSON.parse(response.text);
   console.log('res', res);
