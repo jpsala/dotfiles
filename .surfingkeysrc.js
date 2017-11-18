@@ -1,6 +1,6 @@
 imap(',,', "<Esc>");
 vmap(',,', "<Esc>");
-
+// settings.blacklistPattern = /.*localhost.*/i;
 unmap('<Ctrl-j>');
 map('F', 'gf');
 
@@ -13,13 +13,16 @@ mapkey('GG', '#2Scroll to the bottom of the page', 'Normal.scroll("bottom")', {r
 addSearchAliasX('c', 'criticker', 'https://www.criticker.com/?type=films&search=', 's', 'https://www.criticker.com/ajax/critickerAc.php?type=films&term=', function(response) {
   console.log('criticker...', response);
   var res = JSON.parse(response.text);
-  console.log('res', res);
+  try{
   Omnibar.listResults(res, function(s) {
     return Omnibar.createURLItem({
-      title: `s.label`,
+      title: s.label,
       url:   "https://criticker.com/" + s.url
     });
   });
+  } catch(e) {
+    console.log('error en busqueda con criticker', e);
+  }
 });
 addSearchAlias('C', 'criticker search', 'https://www.criticker.com/?type=films&search=');
 vmapkey('sc', 'Search Selected with Criticker + ajax',  'searchSelectedWith("https://www.criticker.com/?type=films&search=")');
@@ -28,9 +31,9 @@ mapkey('sc', '#3Search Criticker + ajax', 'Front.openOmnibar({type: "SearchEngin
 mapkey('sC', '#3Search Criticker', 'Front.openOmnibar({type: "SearchEngine", extra: "C"})');
 
 // fin filtros google
+//youtube
 
-// },
-//https://clients1.google.com/complete/search?client=youtube&hl=en&gl=ar&sugexp=ytd3_arm_2&gs_rn=64&gs_ri=youtube&tok=pgyz3-q4M6xQfo5hPCaZTg&ds=yt&cp=3&gs_id=c&q=bbb&callback=google.sbox.p50&gs_gbg=7511
+vmapkey('sy', 'Search Selected with youtube',  'searchSelectedWith("https://www.youtube.com/results?search_query=")');
 addSearchAliasX('y', 'youtube', 'https://www.youtube.com/results?search_query=', 's', `https://www.googleapis.com/youtube/v3/search?maxResults=20&part=snippet&type=video,channel&key=AIzaSyAlnuigXIdOfthUHe75FqZJFeT-kVmmcWc&safeSearch=none&q=`,  
 function(response) {
   var res = JSON.parse(response.text).items;
@@ -50,6 +53,7 @@ function(response) {
   });
 }
 );
+// fin youtube
 /*
 "google.sbox.p50 && google.sbox.p50(["hol",[["holotropic breathing",35,[39]],["hola soy german",35,[39]],["hollywood movie",0],["hollywood movie in hindi",0],["hollywood undead",0],["hollywood movies in hindi dubbed full action hd",0],["hollywood",0],["hold on",0],["hollywood movies 2017",0],["holiday",0]],{"a":"rZSObmRy4ROjkkVmGenskCVnSgr1IcubUNTvTkV1bm82OluIJLv9Yxk3baeIoeHLZkCaLVfZQQ8EfGU9Ce37ErxetS","j":"c","k":1,"q":"Ps4mRWqbQ9ncZDbttnz8VcdCEkU"}])"
 */
@@ -90,4 +94,8 @@ function addGoogleFilters() {
   googleFilter(2, 'y');
   googleFilter(3, 'y');  
 }
+
+// $(document).ready(()=>{
+  $($('.div-socios button')[0]).click();
+// });
 
